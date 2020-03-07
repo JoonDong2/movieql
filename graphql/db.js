@@ -1,9 +1,18 @@
 import fetch from "node-fetch"
 
-const API_URL = "https://yts.mx/api/v2/list_movies.json"
+const API_URL = "https://yts.mx/api/v2/list_movies.json?"
 
-const getMovies = (limit, rating) => {
-    fetch(`&{API_URL}`)
+export const getMovies = (limit, rating) => {
+    let REQUEST_URL = API_URL;
+
+    if(limit !== null && limit > 0) {
+        REQUEST_URL += `limit=${limit}`;
+    }
+    if(rating !== null && rating > 0) {
+        REQUEST_URL += `&minimum_rating=${rating}`
+    }
+
+     returnfetch(`${REQUEST_URL}`)
     .then(res => res.json())
     .then(json => json.data.movies);
 }
